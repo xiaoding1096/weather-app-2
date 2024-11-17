@@ -1,0 +1,141 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 62.5%;
+  font-family: Sora, sans-serif;
+  padding: 20px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  width: 100%;
+  height: 100vh;
+}
+
+.today {
+  border-radius: 50px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: lightblue;
+  grid-column: 1/2;
+  grid-row: 1/12;
+}
+
+#search-form {
+  width: 95%;
+  height: 100px;
+}
+
+#search-input {
+  /* margin: 10px; */
+  width: 100%;
+  height: 80%;
+  outline: none;
+  border-radius: 50px 0px;
+  border: 1px solid transparent;
+  background: rgba(0, 0, 0, 0.1);
+  transition: 0.5s;
+  padding: 25px;
+  font-size: 3rem;
+}
+
+#search-input:hover {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0px 50px;
+}
+
+#search-input::placeholder {
+  color: #fff;
+}
+
+.today-city {
+  font-size: 3rem;
+  margin: 10px;
+}
+
+#change-temperature {
+  margin: 10px;
+  width: 100px;
+  height: 50px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: transparent;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.5s;
+  color: #fff;
+}
+
+#change-temperature:hover {
+  scale: 1.2;
+}
+
+.today-temperature-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 300px;
+  background-color: yellow;
+  border-radius: 20px;
+}
+
+.today-temperature {
+  font-size: 8rem;
+}
+
+.otherday {
+  border-radius: 0 10px 10px 0;
+  background-color: rgb(0, 0, 0);
+  grid-column: 2/4;
+  grid-row: 2/11;
+}
+
+.otherday-inner {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  padding: 15px;
+  column-gap: 5px;
+  row-gap: 5px;
+}
+
+.otherday-inner_day {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: pink;
+}
+
+.otherday-day {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.img-otherday_icon {
+  margin: 20px 0;
+  max-width: 130px;
+  max-height: 130px;
+}
+
+.otherday-minmax-temperature {
+  margin-top: 10px;
+}
+
+.otherday-minmax {
+  font-size: 2rem;
+  padding: 10px;
+}
