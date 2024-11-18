@@ -123,6 +123,7 @@ body {
 .otherday-day {
   font-size: 2rem;
   margin-bottom: 15px;
+  font-weight: bold;
 }
 
 .img-otherday_icon {
