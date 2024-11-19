@@ -18,7 +18,7 @@
         <form action="" id="search-form">
           <input type="text" id="search-input" placeholder="Ask Me AnyWhere"/>
         </form>
-        <p class="today-city">Ho Chi Minh</p>
+        <p id="today-city">Ho Chi Minh</p>
         <button id="change-temperature">0C / 0F</button>
         <div class="today-temperature-wrapper">
           <span class="today-temperature">26</span>
@@ -29,7 +29,7 @@
         <div id="dayoffuture-wrapper">
           <!-- day 0 -->
           <div class="dayoffuture_day">
-            <span class="dayoffuture-day">day 0</span>
+            <span class="dayoffuture-day"></span>
             <img src="./img/sun.png" alt="" class="img-dayoffuture_icon" />
             <div class="dayoffuture-minmax-temperature">
               <span class="dayoffuture-minmax">10</span>
@@ -40,6 +40,7 @@
         </div>
       </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="./main.js"></script>
   </body>
 </html>

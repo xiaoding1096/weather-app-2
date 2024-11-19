@@ -57,9 +57,10 @@ body {
   color: #fff;
 }
 
-.today-city {
+#today-city {
   font-size: 3rem;
   margin: 10px;
+  text-align: center;
 }
 
 #change-temperature {
@@ -88,10 +89,11 @@ body {
   height: 300px;
   background-color: yellow;
   border-radius: 20px;
+  padding: 10px;
 }
 
 .today-temperature {
-  font-size: 8rem;
+  font-size: 7rem;
 }
 
 .dayoffuture {
