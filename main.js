@@ -32,14 +32,19 @@ async function displayWeatherToday() {
       alert("Something Went Wrong: Try Checking Your Internet Coneciton");
     });
   console.log(data);
+
   conditions.innerHTML = data.currentConditions.conditions;
-  feelslike.innerHTML = Math.round((data.currentConditions.feelslike - 32) * 5/9);
+  feelslike.innerHTML = Math.round(
+    ((data.currentConditions.feelslike - 32) * 5) / 9
+  );
   humidity.innerHTML = data.currentConditions.humidity + " %";
   visibility.innerHTML = data.currentConditions.visibility + " K/m";
   sunrise.innerHTML = data.currentConditions.sunrise;
   sunset.innerHTML = data.currentConditions.sunset;
   todayCity.innerHTML = data.resolvedAddress;
-  todayTemperature.innerHTML = Math.round((data.currentConditions.temp - 32) * 5/9);
+  todayTemperature.innerHTML = Math.round(
+    ((data.currentConditions.temp - 32) * 5) / 9
+  );
 }
 
 //this function allow we display information when we have written something to input through create a new object, add a class for that object and add html content in that
@@ -54,21 +59,25 @@ async function displayWeatherNext8days() {
       alert("Something Went Wrong: Try Checking Your Internet Coneciton");
     });
 
+  dayOfFuture.innerText = "";
   data.days.forEach((day) => {
     const newDivItem = document.createElement("div");
     newDivItem.classList.add("dayoffuture_day");
-
     newDivItem.innerHTML = `
     <span class="dayoffuture-day">${day.datetime}</span> 
         <img src="${day.icon}" alt="" class=" img-dayoffuture_icon" />
         <div class="dayoffuture-minmax-temperature">
         <div>
         <span>Min</span>
-        <span class="dayoffuture-minmax">${day.tempmin}</span>
+        <span class="dayoffuture-minmax">${Math.round(
+          ((day.tempmin - 32) * 5) / 9
+        )}</span>
         </div>
         <div>
         <span>Max</span>
-        <span class="dayoffuture-minmax">${day.tempmax}</span>
+        <span class="dayoffuture-minmax">${Math.round(
+          ((day.tempmax - 32) * 5) / 9
+        )}</span>
         </div>
         </div>
     `;
