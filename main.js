@@ -44,7 +44,7 @@ async function displayWeatherToday() {
   todayCity.innerHTML = data.resolvedAddress;
   todayTemperature.innerHTML = Math.round(
     ((data.currentConditions.temp - 32) * 5) / 9
-  );
+  ) + "°C";
 }
 
 //this function allow we display information when we have written something to input through create a new object, add a class for that object and add html content in that
@@ -71,13 +71,13 @@ async function displayWeatherNext8days() {
         <span>Min</span>
         <span class="dayoffuture-minmax">${Math.round(
           ((day.tempmin - 32) * 5) / 9
-        )}</span>
+        )}°C</span>
         </div>
         <div>
         <span>Max</span>
         <span class="dayoffuture-minmax">${Math.round(
           ((day.tempmax - 32) * 5) / 9
-        )}</span>
+        )}°C</span>
         </div>
         </div>
     `;
