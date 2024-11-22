@@ -16,18 +16,19 @@ const sunset = document.querySelector(".sunset-info");
 searchForm.addEventListener("submit", searchInfoWeatherCity);
 function searchInfoWeatherCity(event) {
   event.preventDefault();
-    getUserLocation();
-    displayWeatherToday();
-    displayWeatherNext8days();
-    searchInput.value = "";
+
+  displayWeatherToday();
+  displayWeatherNext8days();
+  searchInput.value = "";
 }
+
 const getLocation = document.getElementById("change-temperature");
 getLocation.addEventListener("click", getUserLocation);
 function getUserLocation() {
   const success = async (position) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    console.log(lat + " " + lon);
+    console.log(position);
     userLocationAPI = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?key=579XEPE66XU8KA92CEUPVGEE9`;
 
     let userData = await fetch(userLocationAPI)
@@ -50,12 +51,12 @@ function getUserLocation() {
     todayCity.innerHTML = userData.resolvedAddress;
 
     dayOfFuture.innerText = "";
-  userData.days.forEach((day) => {
-    const newDivItem = document.createElement("div");
-    newDivItem.classList.add("dayoffuture_day");
-    newDivItem.innerHTML = `
+    userData.days.forEach((day) => {
+      const newDivItem = document.createElement("div");
+      newDivItem.classList.add("dayoffuture_day");
+      newDivItem.innerHTML = `
     <span class="dayoffuture-day">${day.datetime}</span> 
-        <img src="${day.icon}" alt="" class=" img-dayoffuture_icon" />
+        <img src="./icon/${day.icon}.png" alt="" class="img-dayoffuture_icon" />
         <div class="dayoffuture-minmax-temperature">
         <div>
         <span>Min</span>
@@ -72,8 +73,8 @@ function getUserLocation() {
         </div>
     `;
 
-    dayOfFuture.appendChild(newDivItem);
-  });
+      dayOfFuture.appendChild(newDivItem);
+    });
   };
 
   function error() {
@@ -86,8 +87,8 @@ function getUserLocation() {
 async function displayWeatherToday() {
   let citySearch = searchInput.value.trim();
 
-  let apiURL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${citySearch}?key=579XEPE66XU8KA92CEUPVGEE9`;
-
+  let apiURL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${citySearch}?key=579XEPE66XU8KA92CEUPVGEE9&icons1`;
+  // 579XEPE66XU8KA92CEUPVGEE9
   let data = await fetch(apiURL)
     .then((response) => response.json())
     .catch((error) => {
@@ -126,7 +127,9 @@ async function displayWeatherNext8days() {
     newDivItem.classList.add("dayoffuture_day");
     newDivItem.innerHTML = `
     <span class="dayoffuture-day">${day.datetime}</span> 
-        <img src="${day.icon}" alt="" class=" img-dayoffuture_icon" />
+        <img src="./icon/${day.icon}.png" alt="" class="${
+      day.icon
+    } img-dayoffuture_icon" />
         <div class="dayoffuture-minmax-temperature">
         <div>
         <span>Min</span>
