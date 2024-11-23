@@ -11,6 +11,7 @@ const humidity = document.querySelector(".humidity-info");
 const visibility = document.querySelector(".visibility-info");
 const sunrise = document.querySelector(".sunrise-info");
 const sunset = document.querySelector(".sunset-info");
+const iconWeatherToday = document.querySelector(".img-today_icon");
 // a variable initial but not used
 const changeTemperature = document.getElementById("change-temperature");
 const dayOfFutureMinMax = document.querySelector(".dayoffuture-minmax");
@@ -57,7 +58,7 @@ function getUserLocation() {
     sunrise.innerHTML = userData.currentConditions.sunrise;
     sunset.innerHTML = userData.currentConditions.sunset;
     todayCity.innerHTML = "Weather Of Your Location";
-
+    iconWeatherToday.src = `./icon/${userData.currentConditions.icon}.png`
     dayOfFuture.innerText = ""; // return content to "" before create a new div with new content inside
 
     //this method allow create a new div and new content

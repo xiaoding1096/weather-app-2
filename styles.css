@@ -92,11 +92,6 @@ body {
   
 }
 
-/* #change-temperature:hover {
-  scale: 1.2;
-} */
-
-
 .today-temperature-wrapper {
   display: flex;
   justify-content: center;
@@ -111,6 +106,14 @@ body {
 
 .today-temperature {
   font-size: 9rem;
+}
+
+.img-today_icon {
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 20px auto;
+  width: auto;
+  height: 250px;
 }
 
 .today-infomation {
