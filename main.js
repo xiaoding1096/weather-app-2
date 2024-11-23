@@ -11,35 +11,42 @@ const humidity = document.querySelector(".humidity-info");
 const visibility = document.querySelector(".visibility-info");
 const sunrise = document.querySelector(".sunrise-info");
 const sunset = document.querySelector(".sunset-info");
+// a variable initial but not used
+const changeTemperature = document.getElementById("change-temperature");
 const dayOfFutureMinMax = document.querySelector(".dayoffuture-minmax");
-const changeC = document.querySelector(".ctof");
-// let userLocationAPI = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=a1a59d2f73eeb4a3e6a24a861af886e4`;
-//This function will help don't reload page when we submit,return a null value in input when we have written something and run a function displayWeather
-searchForm.addEventListener("submit", searchInfoWeatherCity);
-function searchInfoWeatherCity(event) {
-  event.preventDefault();
 
-  displayWeatherToday();
-  displayWeatherNext15days();
-  searchInput.value = "";
+// This function allow we submit then run function searchInfoWeatherCity ()
+searchForm.addEventListener("submit", searchInfoWeatherCity);
+
+// function searchInfoWeatherCity() will excuted :
+
+function searchInfoWeatherCity(event) {
+  event.preventDefault(); // 1. not reload a page when submit
+  displayWeatherToday(); // 2. run function displayWeatherToday()
+  displayWeatherNext15days(); // 3.run function displayWeatherNext15days()
+  searchInput.value = ""; // 4 . Delete a content we wrote to box input
 }
 
-// const getLocation = document.getElementById("change-temperature");
-// getLocation.addEventListener("click", getUserLocation);
+// this function allow get user location :
 function getUserLocation() {
+  //if get success information will excuted this
   const success = async (position) => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+    const lat = position.coords.latitude; // get latitude of user
+    const lon = position.coords.longitude; // get longitude of user
     console.log(lat + " " + lon);
-    userLocationAPI = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?key=579XEPE66XU8KA92CEUPVGEE9`;
+    // this api will receive latitude and longitude then return latitude and longitude and information about weather
+    userLocationAPI = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?key=579XEPE66XU8KA92CEUPVGEE9`; // give latidude, longitude of user to api
 
+    // receive information from api and give to variable userData
     let userData = await fetch(userLocationAPI)
       .then((response) => response.json())
       .catch((error) =>
         alert("Something Went Wrong: Try Checking Your Internet Coneciton")
       );
-    console.log(userData);
 
+    console.log(userData); // we can see that information here
+
+    // use that information and change to html
     conditions.innerHTML = userData.currentConditions.conditions;
     feelslike.innerHTML =
       Math.round(((userData.currentConditions.feelslike - 32) * 5) / 9) + "°C";
@@ -51,7 +58,9 @@ function getUserLocation() {
     sunset.innerHTML = userData.currentConditions.sunset;
     todayCity.innerHTML = "Weather Of Your Location";
 
-    dayOfFuture.innerText = "";
+    dayOfFuture.innerText = ""; // return content to "" before create a new div with new content inside
+
+    //this method allow create a new div and new content
     userData.days.forEach((day) => {
       const newDivItem = document.createElement("div");
       newDivItem.classList.add("dayoffuture_day");
@@ -74,17 +83,18 @@ function getUserLocation() {
         </div>
     `;
 
-      dayOfFuture.appendChild(newDivItem);
+      dayOfFuture.appendChild(newDivItem); // all of new content will be contain by div dayOfFuture
     });
   };
-
+  // if get fail information will executed this
   function error() {
     alert("Can't support for you");
   }
+  // this method allow we get a information of user
   navigator.geolocation.getCurrentPosition(success, error);
 }
 
-// this function will get information from api and render to object "today" in html
+// this function will get information from api and render to html of today information
 async function displayWeatherToday() {
   let citySearch = searchInput.value.trim();
 
@@ -96,7 +106,6 @@ async function displayWeatherToday() {
       alert("Something Went Wrong: Try Checking Your Internet Coneciton");
     });
   console.log(data);
-
   conditions.innerHTML = data.currentConditions.conditions;
   feelslike.innerHTML =
     Math.round(((data.currentConditions.feelslike - 32) * 5) / 9) + "°C";
@@ -109,7 +118,7 @@ async function displayWeatherToday() {
     Math.round(((data.currentConditions.temp - 32) * 5) / 9) + "°C";
 }
 
-//this function allow we display information when we have written something to input through create a new object, add a class for that object and add html content in that
+//this function allow we display information of next 15 days when we have written location to input and then create a new object, add a class for that object and add html content in that
 async function displayWeatherNext15days() {
   let citySearch = searchInput.value.trim();
 
@@ -148,10 +157,3 @@ async function displayWeatherNext15days() {
     dayOfFuture.appendChild(newDivItem);
   });
 }
-
-// changeC.addEventListener("click", cToF);
-// function cToF() {
-//   todayTemperature.value = Math.round(((todayTemperature.value + 32) * 9) /5) + "°F";
-// }
-
-// make a btn to change c to f link : https://www.youtube.com/watch?v=tIBQBmZvv8U&t=2884s
