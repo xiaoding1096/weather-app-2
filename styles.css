@@ -84,6 +84,11 @@ body {
   scale: 1.2;
 }
 
+.your-location button{
+  margin-top: 30px;
+  font-size: 3rem;
+}
+
 .today-temperature-wrapper {
   display: flex;
   justify-content: center;
@@ -139,7 +144,6 @@ body {
 }
 
 #dayoffuture-wrapper {
-  
   width: 100%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -170,8 +174,6 @@ body {
   margin: 10px 0;
   width: 150px;
   height: 150px;
-  
-  
 }
 
 .dayoffuture-minmax-temperature {
@@ -198,4 +200,3 @@ body {
   padding: 10px;
   font-weight: 500;
 }
-

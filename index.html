@@ -16,7 +16,7 @@
     <title>Weather-app</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body onload="getUserLocation()">
     <div class="container">
       <div class="container-inner">
         <div class="today">
@@ -29,10 +29,12 @@
           </form>
           <p id="today-city"></p>
           <button id="change-temperature">Display Your Location</button>
+          <!-- <div class="your-location">
+            <button class="ctof">°C | °F</button>
+          </div> -->
           <div class="today-temperature-wrapper">
             <span class="today-temperature"></span>
           </div>
-          <div class="condition"></div>
         </div>
         <div class="today-infomation">
           <div class="conditions today-infomation-item">

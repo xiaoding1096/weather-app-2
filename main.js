@@ -11,6 +11,8 @@ const humidity = document.querySelector(".humidity-info");
 const visibility = document.querySelector(".visibility-info");
 const sunrise = document.querySelector(".sunrise-info");
 const sunset = document.querySelector(".sunset-info");
+const dayOfFutureMinMax = document.querySelector(".dayoffuture-minmax");
+const changeC = document.querySelector(".ctof");
 // let userLocationAPI = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=a1a59d2f73eeb4a3e6a24a861af886e4`;
 //This function will help don't reload page when we submit,return a null value in input when we have written something and run a function displayWeather
 searchForm.addEventListener("submit", searchInfoWeatherCity);
@@ -18,17 +20,17 @@ function searchInfoWeatherCity(event) {
   event.preventDefault();
 
   displayWeatherToday();
-  displayWeatherNext8days();
+  displayWeatherNext15days();
   searchInput.value = "";
 }
 
-const getLocation = document.getElementById("change-temperature");
-getLocation.addEventListener("click", getUserLocation);
+// const getLocation = document.getElementById("change-temperature");
+// getLocation.addEventListener("click", getUserLocation);
 function getUserLocation() {
   const success = async (position) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    console.log(position);
+    console.log(lat + " " + lon);
     userLocationAPI = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?key=579XEPE66XU8KA92CEUPVGEE9`;
 
     let userData = await fetch(userLocationAPI)
@@ -39,16 +41,15 @@ function getUserLocation() {
     console.log(userData);
 
     conditions.innerHTML = userData.currentConditions.conditions;
-    feelslike.innerHTML = Math.round(
-      ((userData.currentConditions.feelslike - 32) * 5) / 9
-    );
+    feelslike.innerHTML =
+      Math.round(((userData.currentConditions.feelslike - 32) * 5) / 9) + "°C";
     todayTemperature.innerHTML =
       Math.round(((userData.currentConditions.temp - 32) * 5) / 9) + "°C";
     humidity.innerHTML = userData.currentConditions.humidity + " %";
     visibility.innerHTML = userData.currentConditions.visibility + " K/m";
     sunrise.innerHTML = userData.currentConditions.sunrise;
     sunset.innerHTML = userData.currentConditions.sunset;
-    todayCity.innerHTML = userData.resolvedAddress;
+    todayCity.innerHTML = "Weather Of Your Location";
 
     dayOfFuture.innerText = "";
     userData.days.forEach((day) => {
@@ -80,7 +81,7 @@ function getUserLocation() {
   function error() {
     alert("Can't support for you");
   }
-  navigator.geolocation.getCurrentPosition(success);
+  navigator.geolocation.getCurrentPosition(success, error);
 }
 
 // this function will get information from api and render to object "today" in html
@@ -97,9 +98,8 @@ async function displayWeatherToday() {
   console.log(data);
 
   conditions.innerHTML = data.currentConditions.conditions;
-  feelslike.innerHTML = Math.round(
-    ((data.currentConditions.feelslike - 32) * 5) / 9
-  );
+  feelslike.innerHTML =
+    Math.round(((data.currentConditions.feelslike - 32) * 5) / 9) + "°C";
   humidity.innerHTML = data.currentConditions.humidity + " %";
   visibility.innerHTML = data.currentConditions.visibility + " K/m";
   sunrise.innerHTML = data.currentConditions.sunrise;
@@ -110,7 +110,7 @@ async function displayWeatherToday() {
 }
 
 //this function allow we display information when we have written something to input through create a new object, add a class for that object and add html content in that
-async function displayWeatherNext8days() {
+async function displayWeatherNext15days() {
   let citySearch = searchInput.value.trim();
 
   let apiURL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline//${citySearch}?key=579XEPE66XU8KA92CEUPVGEE9&icons1`;
@@ -145,11 +145,13 @@ async function displayWeatherNext8days() {
         </div>
         </div>
     `;
-
     dayOfFuture.appendChild(newDivItem);
   });
 }
 
-//add day time
-// add user position make that is default when dont have input
-//add info have not finished
+// changeC.addEventListener("click", cToF);
+// function cToF() {
+//   todayTemperature.value = Math.round(((todayTemperature.value + 32) * 9) /5) + "°F";
+// }
+
+// make a btn to change c to f link : https://www.youtube.com/watch?v=tIBQBmZvv8U&t=2884s
