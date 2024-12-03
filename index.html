@@ -9,37 +9,71 @@
       href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Sora:wght@100..800&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"
+    />
     <title>Weather-app</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body onload="getUserLocation()">
     <div class="container">
-      <div class="today">
-        <form action="" id="search-form">
-          <input type="text" id="search-input" placeholder="Ask Me AnyWhere"/>
-        </form>
-        <p class="today-city">Ho Chi Minh</p>
-        <button id="change-temperature">0C / 0F</button>
-        <div class="today-temperature-wrapper">
-          <span class="today-temperature">26</span>
+      <div class="container-inner">
+        <div class="today">
+          <form action="" id="search-form">
+            <input
+              type="text"
+              id="search-input"
+              placeholder=""
+            />
+            <select id="change-temperature" onchange="convert()">
+              <option value="°C">°C</option>
+              <option value="°F">°F</option>
+            </select>
+          </form>
+          <p id="today-city"></p>
+          
+          
+          <div class="today-temperature-wrapper">
+            <span class="today-temperature"></span>
+          </div>
+          <div class="icon-wrapper">
+            <img src="./icon/" alt="" class="img-today_icon img-today_icon">
+          </div>
         </div>
-        <div class="condition"></div>
+        <div class="today-infomation">
+          <div class="conditions today-infomation-item">
+            <span>Conditions</span>
+            <span class="conditions-info"></span>
+          </div>
+          <div class="feelslike today-infomation-item">
+            <span>Feelslike</span>
+            <span class="feelslike-info"></span>
+          </div>
+          <div class="humidity today-infomation-item">
+            <span>Humidity</span>
+            <span class="humidity-info"></span>
+          </div>
+          <div class="visibility today-infomation-item">
+            <span>Visibility</span>
+            <span class="visibility-info"></span>
+          </div>
+          <div class="sunrise today-infomation-item">
+            <span>Sunrise</span>
+            <span class="sunrise-info"></span>
+          </div>
+          <div class="sunset today-infomation-item">
+            <span>Sunset</span>
+            <span class="sunset-info"></span>
+          </div>
+        </div>
       </div>
       <div class="dayoffuture">
         <div id="dayoffuture-wrapper">
-          <!-- day 0 -->
-          <div class="dayoffuture_day">
-            <span class="dayoffuture-day">day 0</span>
-            <img src="./img/sun.png" alt="" class="img-dayoffuture_icon" />
-            <div class="dayoffuture-minmax-temperature">
-              <span class="dayoffuture-minmax">10</span>
-              <span class="dayoffuture-minmax">30</span>
-            </div>
-          </div>
-          
         </div>
       </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="./main.js"></script>
   </body>
 </html>
