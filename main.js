@@ -15,18 +15,24 @@ const iconWeatherToday = document.querySelector(".img-today_icon");
 // a variable initial but not used
 const changeTemperature = document.getElementById("change-temperature");
 const dayOfFutureMinMax = document.querySelector(".dayoffuture-minmax");
-
+const baseUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/`;
+const keyUrl = `?key=579XEPE66XU8KA92CEUPVGEE9&icons1`
 // This function allow we submit then run function searchInfoWeatherCity ()
 searchForm.addEventListener("submit", searchInfoWeatherCity);
 
 // function searchInfoWeatherCity() will excuted :
 function searchInfoWeatherCity(event) {
   event.preventDefault(); // 1. not reload a page when submit
-  let citySearch = searchInput.value.trim();
-  let apiURL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${citySearch}?key=579XEPE66XU8KA92CEUPVGEE9&icons1`;
-  displayWeatherToday(apiURL); // 2. run function displayWeatherToday()
-  displayWeatherNext15days(apiURL); // 3.run function displayWeatherNext15days()
-  searchInput.value = ""; // 4 . Delete a content we wrote to box input
+  function convert() {
+    if(searchInput.value) {
+    this.displayWeatherToday(); 
+    this.displayWeatherNext15days()
+    };
+  }
+  convert();
+  // displayWeatherToday(); // 2. run function displayWeatherToday()
+  // displayWeatherNext15days(); // 3.run function displayWeatherNext15days()
+  // searchInput.value = ""; // 4 . Delete a content we wrote to box input
 }
 
 // this function allow get user location :
@@ -36,8 +42,8 @@ function getUserLocation() {
     const lat = position.coords.latitude; // get latitude of user
     const lon = position.coords.longitude; // get longitude of user
     // this api will receive latitude and longitude then return latitude and longitude and information about weather
-    userLocationAPI = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?key=579XEPE66XU8KA92CEUPVGEE9`; // give latidude, longitude of user to api
-
+    userLocationAPI = `${baseUrl}${lat},${lon}${keyUrl}`; // give latidude, longitude of user to api
+    console.log(userLocationAPI)
     // receive information from api and give to variable userData
     let userData = await fetch(userLocationAPI)
       .then((response) => response.json())
@@ -90,8 +96,10 @@ function getUserLocation() {
   navigator.geolocation.getCurrentPosition(success, error);
 }
 // this function will get information from api and render to html of today information
-async function displayWeatherToday(api) {
-  let data = await fetch(api)
+async function displayWeatherToday() {
+  let citySearch = searchInput.value.trim();
+  let apiURL = `${baseUrl}${citySearch}${keyUrl}`;
+  let data = await fetch(apiURL)
     .then((response) => response.json())
     .catch((error) => {
       alert("Something Went Wrong: Try Checking Your Internet Conection");
@@ -107,8 +115,10 @@ async function displayWeatherToday(api) {
   todayTemperature.innerHTML = convertToday(data.currentConditions.temp);
 }
 //this function allow we display information of next 15 days when we have written location to input and then create a new object, add a class for that object and add html content in that
-async function displayWeatherNext15days(api) {
-  let data = await fetch(api)
+async function displayWeatherNext15days() {
+  let citySearch = searchInput.value.trim();
+  let apiURL = `${baseUrl}${citySearch}${keyUrl}`;
+  let data = await fetch(apiURL)
     .then((response) => response.json())
     .catch((error) => {
       alert("Something Went Wrong: Try Checking Your Internet Coneciton");
@@ -144,6 +154,7 @@ async function displayWeatherNext15days(api) {
 
 // This function for convert temperature in section today and use this function in function displayWeatherToday()
 function convertToday(temp) {
+  
   let message = "";
   if (changeTemperature.value == "°C") {
     message = Math.round(((temp - 32) * 5) / 9) + "°C";
@@ -163,5 +174,4 @@ function convertNext15Days(temp) {
   }
   return message;
 }
-
 
