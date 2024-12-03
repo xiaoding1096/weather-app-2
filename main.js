@@ -22,8 +22,10 @@ searchForm.addEventListener("submit", searchInfoWeatherCity);
 // function searchInfoWeatherCity() will excuted :
 function searchInfoWeatherCity(event) {
   event.preventDefault(); // 1. not reload a page when submit
-  displayWeatherToday(); // 2. run function displayWeatherToday()
-  displayWeatherNext15days(); // 3.run function displayWeatherNext15days()
+  let citySearch = searchInput.value.trim();
+  let apiURL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${citySearch}?key=579XEPE66XU8KA92CEUPVGEE9&icons1`;
+  displayWeatherToday(apiURL); // 2. run function displayWeatherToday()
+  displayWeatherNext15days(apiURL); // 3.run function displayWeatherNext15days()
   searchInput.value = ""; // 4 . Delete a content we wrote to box input
 }
 
@@ -33,7 +35,6 @@ function getUserLocation() {
   const success = async (position) => {
     const lat = position.coords.latitude; // get latitude of user
     const lon = position.coords.longitude; // get longitude of user
-    console.log(lat + " " + lon);
     // this api will receive latitude and longitude then return latitude and longitude and information about weather
     userLocationAPI = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?key=579XEPE66XU8KA92CEUPVGEE9`; // give latidude, longitude of user to api
 
@@ -43,8 +44,6 @@ function getUserLocation() {
       .catch((error) =>
         alert("Something Went Wrong: Try Checking Your Internet Coneciton")
       );
-
-    console.log(userData); // we can see that information here
 
     // use that information and change to html
     conditions.innerHTML = userData.currentConditions.conditions;
@@ -90,20 +89,15 @@ function getUserLocation() {
   // this method allow we get a information of user
   navigator.geolocation.getCurrentPosition(success, error);
 }
-
 // this function will get information from api and render to html of today information
-async function displayWeatherToday() {
-  let citySearch = searchInput.value.trim();
-
-  let apiURL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${citySearch}?key=579XEPE66XU8KA92CEUPVGEE9&icons1`;
-  // 579XEPE66XU8KA92CEUPVGEE9
-  let data = await fetch(apiURL)
+async function displayWeatherToday(api) {
+  let data = await fetch(api)
     .then((response) => response.json())
     .catch((error) => {
-      alert("Something Went Wrong: Try Checking Your Internet Coneciton");
+      alert("Something Went Wrong: Try Checking Your Internet Conection");
     });
-  console.log(data);
   conditions.innerHTML = data.currentConditions.conditions;
+  
   feelslike.innerHTML = convertToday(data.currentConditions.feelslike);
   humidity.innerHTML = data.currentConditions.humidity + " %";
   visibility.innerHTML = data.currentConditions.visibility + " K/m";
@@ -112,14 +106,9 @@ async function displayWeatherToday() {
   todayCity.innerHTML = data.resolvedAddress;
   todayTemperature.innerHTML = convertToday(data.currentConditions.temp);
 }
-
 //this function allow we display information of next 15 days when we have written location to input and then create a new object, add a class for that object and add html content in that
-async function displayWeatherNext15days() {
-  let citySearch = searchInput.value.trim();
-
-  let apiURL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline//${citySearch}?key=579XEPE66XU8KA92CEUPVGEE9&icons1`;
-
-  let data = await fetch(apiURL)
+async function displayWeatherNext15days(api) {
+  let data = await fetch(api)
     .then((response) => response.json())
     .catch((error) => {
       alert("Something Went Wrong: Try Checking Your Internet Coneciton");
@@ -174,3 +163,5 @@ function convertNext15Days(temp) {
   }
   return message;
 }
+
+
